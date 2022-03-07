@@ -25,7 +25,7 @@ class PageIndicatorView @JvmOverloads constructor(
         isAntiAlias = true
     }
 
-    private val pageIndicatorDrawer: PageIndicatorDrawer = ThinWormAnimPageIndicatorDrawer()
+    private val pageIndicatorDrawer: PageIndicatorDrawer = JumpAnimPageIndicator()
 
     private val circleRadius = 50f
     private val itemGap = 20
