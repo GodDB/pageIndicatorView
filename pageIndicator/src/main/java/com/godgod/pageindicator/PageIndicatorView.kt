@@ -7,9 +7,9 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.godgod.pageindicator.animator.BasicPageIndicatorDrawer
-import com.godgod.pageindicator.animator.JumpAnimPageIndicator
+import com.godgod.pageindicator.animator.*
 import com.godgod.pageindicator.animator.PageIndicatorDrawer
+import com.godgod.pageindicator.animator.ThinWormAnimPageIndicatorDrawer
 
 class PageIndicatorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -25,7 +25,7 @@ class PageIndicatorView @JvmOverloads constructor(
         isAntiAlias = true
     }
 
-    private val pageIndicatorDrawer: PageIndicatorDrawer = JumpAnimPageIndicator()
+    private val pageIndicatorDrawer: PageIndicatorDrawer = ThinWormAnimPageIndicatorDrawer()
 
     private val circleRadius = 50f
     private val itemGap = 20
@@ -37,9 +37,6 @@ class PageIndicatorView @JvmOverloads constructor(
 
     private val indicatorMap: HashMap<Int, Indicator> = hashMapOf()
 
-    init {
-
-    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
