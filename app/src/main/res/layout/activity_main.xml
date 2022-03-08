@@ -24,6 +24,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="50dp"
+        app:indicator_circle_radius="7dp"
+        app:indicator_gap="5dp"
+        app:indicator_type="worm"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

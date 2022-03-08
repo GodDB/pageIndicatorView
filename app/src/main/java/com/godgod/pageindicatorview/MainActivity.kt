@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewPager2.connectTo(findViewById<PageIndicatorView>(R.id.cv_page_indicator).apply {
-            setItemCount(4)
+            setIndicatorCount(4)
         })
     }
 }

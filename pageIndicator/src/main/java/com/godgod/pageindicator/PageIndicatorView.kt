@@ -2,11 +2,11 @@ package com.godgod.pageindicator
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.godgod.pageindicator.animator.PageIndicatorDrawer
 
@@ -43,6 +43,29 @@ class PageIndicatorView @JvmOverloads constructor(
     private var selectedPositionOffsetPixel: Int = 0
 
     private val indicatorMap: HashMap<Int, Indicator> = hashMapOf()
+
+    init {
+        attrs?.let {
+            setupAttrs(it)
+        }
+    }
+
+    private fun setupAttrs(attrs: AttributeSet) {
+        context.obtainStyledAttributes(attrs, R.styleable.PageIndicatorView).use {
+            val indicatorType = PageIndicatorType.values()[it.getInt(R.styleable.PageIndicatorView_indicator_type, 0)]
+            setPageIndicatorType(indicatorType)
+            val selectColor = it.getColor(R.styleable.PageIndicatorView_select_indicator_color, ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+            setSelectIndicatorColor(selectColor)
+            val unselectColor = it.getColor(R.styleable.PageIndicatorView_unselect_indidator_color, ContextCompat.getColor(context, R.color.cardview_dark_background))
+            setUnselectIndicatorColor(unselectColor)
+            val indicatorCount = it.getInteger(R.styleable.PageIndicatorView_indicator_count, 0)
+            setIndicatorCount(indicatorCount)
+            val indicatorGap = it.getDimension(R.styleable.PageIndicatorView_indicator_gap, 0f)
+            setIndicatorGap(indicatorGap.toInt())
+            val indicatorCircleRadius = it.getDimension(R.styleable.PageIndicatorView_indicator_circle_radius, 0f)
+            setIndicatorCircleRadius(indicatorCircleRadius)
+        }
+    }
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -91,7 +114,7 @@ class PageIndicatorView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setItemCount(count: Int) {
+    fun setIndicatorCount(count: Int) {
         itemCount = count
         requestLayout()
     }
@@ -101,7 +124,7 @@ class PageIndicatorView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setCircleRadius(radius: Float) {
+    fun setIndicatorCircleRadius(radius: Float) {
         this.circleRadius = radius
         requestLayout()
     }
@@ -111,18 +134,25 @@ class PageIndicatorView @JvmOverloads constructor(
         requestLayout()
     }
 
-    fun setSelectIndicatorColor(@ColorRes color: Int) {
+    fun setSelectIndicatorColor(color: Int) {
         this._selectPaint = Paint().apply {
             this.isAntiAlias = true
-            this.color = ContextCompat.getColor(context, color)
+            this.color = color
         }
+        invalidate()
     }
 
-    fun setUnselectIndicatorColor(@ColorRes color: Int) {
+    fun setUnselectIndicatorColor(color: Int) {
         this._unselectPaint = Paint().apply {
             this.isAntiAlias = true
-            this.color = ContextCompat.getColor(context, color)
+            this.color = color
         }
+        invalidate()
+    }
+
+    private inline fun TypedArray.use(block : (TypedArray) -> Unit) {
+        block(this)
+        this.recycle()
     }
 
     internal data class Indicator(val cx: Float, val cy: Float, val circleRadius: Float) {

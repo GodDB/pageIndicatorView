@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="PageIndicatorView">
-        <attr name="indicator_type" format="enum"/>
+        <attr name="indicator_type" format="enum">
+            <enum name="basic" value="0"/>
+            <enum name="fade" value="1"/>
+            <enum name="jump" value="2"/>
+            <enum name="move" value="3"/>
+            <enum name="thin_worm" value="4"/>
+            <enum name="worm" value="5"/>
+        </attr>
         <attr name="select_indicator_color" format="color"/>
         <attr name="unselect_indidator_color" format="color"/>
         <attr name="indicator_count" format="integer"/>
-        <attr name="indicator_gap" format="dimension|integer"/>
-        <attr name="indicator_circle_radius" format="dimension|integer"/>
+        <attr name="indicator_gap" format="dimension"/>
+        <attr name="indicator_circle_radius" format="dimension"/>
     </declare-styleable>
 
 </resources>
