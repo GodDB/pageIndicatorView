@@ -6,29 +6,36 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.godgod.pageindicator.animator.*
 import com.godgod.pageindicator.animator.PageIndicatorDrawer
-import com.godgod.pageindicator.animator.ThinWormAnimPageIndicatorDrawer
 
 class PageIndicatorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : View(context, attrs) {
 
-    private val unSelectPaint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.cardview_dark_background)
-        isAntiAlias = true
-    }
+    private var _unselectPaint: Paint? = null
+    private val unselectPaint: Paint
+        get() = _unselectPaint ?: Paint().apply {
+            color = ContextCompat.getColor(context, R.color.cardview_dark_background)
+            isAntiAlias = true
+        }
 
-    private val selectPaint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.design_default_color_primary_variant)
-        isAntiAlias = true
-    }
+    private var _selectPaint: Paint? = null
+    private val selectPaint: Paint
+        get() = _selectPaint ?: Paint().apply {
+            color = ContextCompat.getColor(context, R.color.design_default_color_on_primary)
+            isAntiAlias = true
+        }
 
-    private val pageIndicatorDrawer: PageIndicatorDrawer = JumpAnimPageIndicator()
+    private val pageIndicatorDrawerFactoryMap: Map<PageIndicatorType, PageIndicatorDrawerFactory<PageIndicatorDrawer>> = PageIndicatorDrawerFactoryMap()
 
-    private val circleRadius = 50f
-    private val itemGap = 20
+    private var _pageIndicatorDrawer: PageIndicatorDrawer? = null
+    private val pageIndicatorDrawer: PageIndicatorDrawer
+        get() = _pageIndicatorDrawer ?: pageIndicatorDrawerFactoryMap[PageIndicatorType.BASIC]!!.create()
+
+    private var circleRadius = 50f
+    private var itemGap = 20
     private var itemCount: Int = 0
 
     private var selectedPosition: Int = 0
@@ -42,11 +49,17 @@ class PageIndicatorView @JvmOverloads constructor(
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
 
-        if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
-            val width = itemCount * (circleRadius * 2 + itemGap) - itemGap
-            val height = circleRadius * 2
-            setMeasuredDimension((width).toInt(), height.toInt())
+        check(widthMode == MeasureSpec.AT_MOST) {
+            "require layout_width = WRAP_CONTENT"
         }
+
+        check(heightMode == MeasureSpec.AT_MOST) {
+            "require layout_height = WRAP_CONTENT"
+        }
+
+        val width = itemCount * (circleRadius * 2 + itemGap) - itemGap
+        val height = circleRadius * 2
+        setMeasuredDimension((width).toInt(), height.toInt())
     }
 
     @SuppressLint("DrawAllocation")
@@ -65,11 +78,10 @@ class PageIndicatorView @JvmOverloads constructor(
         indicatorMap[selectedPosition]?.let {
             pageIndicatorDrawer.draw(canvas, selectPaint, itemGap, selectedPosition, selectedPositionOffset, it)
         }
-
     }
 
     private fun drawUnSelectCircle(canvas: Canvas, indicator: Indicator) {
-        canvas.drawCircle(indicator.cx, indicator.cy, indicator.circleRadius, unSelectPaint)
+        canvas.drawCircle(indicator.cx, indicator.cy, indicator.circleRadius, unselectPaint)
     }
 
     fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -84,6 +96,34 @@ class PageIndicatorView @JvmOverloads constructor(
         requestLayout()
     }
 
+    fun setPageIndicatorType(type: PageIndicatorType) {
+        this._pageIndicatorDrawer = pageIndicatorDrawerFactoryMap[type]!!.create()
+        invalidate()
+    }
+
+    fun setCircleRadius(radius: Float) {
+        this.circleRadius = radius
+        requestLayout()
+    }
+
+    fun setIndicatorGap(gap: Int) {
+        this.itemGap = gap
+        requestLayout()
+    }
+
+    fun setSelectIndicatorColor(@ColorRes color: Int) {
+        this._selectPaint = Paint().apply {
+            this.isAntiAlias = true
+            this.color = ContextCompat.getColor(context, color)
+        }
+    }
+
+    fun setUnselectIndicatorColor(@ColorRes color: Int) {
+        this._unselectPaint = Paint().apply {
+            this.isAntiAlias = true
+            this.color = ContextCompat.getColor(context, color)
+        }
+    }
 
     internal data class Indicator(val cx: Float, val cy: Float, val circleRadius: Float) {
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PageIndicatorView">
+        <attr name="indicator_type" format="enum"/>
+        <attr name="select_indicator_color" format="color"/>
+        <attr name="unselect_indidator_color" format="color"/>
+        <attr name="indicator_count" format="integer"/>
+        <attr name="indicator_gap" format="dimension|integer"/>
+        <attr name="indicator_circle_radius" format="dimension|integer"/>
+    </declare-styleable>
+
+</resources>

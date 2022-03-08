@@ -2,6 +2,7 @@ package com.godgod.pageindicator.animator
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import com.godgod.pageindicator.PageIndicatorDrawerFactory
 import com.godgod.pageindicator.PageIndicatorView
 import kotlin.math.tan
 
@@ -31,5 +32,11 @@ internal class JumpAnimPageIndicator : PageIndicatorDrawer() {
         val prevY = -(tan(Math.toRadians(60.0)) * distance).toFloat() * 0.5f
         val jumpY = -(tan(Math.toRadians(300.0)) * distance).toFloat()
         canvas.drawCircle(indicator.cx + prevX + (distance * animValue), indicator.cy + prevY + (jumpY * animValue), indicator.circleRadius * scaleAnimValue, paint)
+    }
+
+    class Factory : PageIndicatorDrawerFactory<JumpAnimPageIndicator> {
+        override fun create(): JumpAnimPageIndicator {
+            return JumpAnimPageIndicator()
+        }
     }
 }

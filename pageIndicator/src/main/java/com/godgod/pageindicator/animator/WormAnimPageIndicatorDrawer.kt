@@ -3,6 +3,7 @@ package com.godgod.pageindicator.animator
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import com.godgod.pageindicator.PageIndicatorDrawerFactory
 import com.godgod.pageindicator.PageIndicatorView
 
 internal class WormAnimPageIndicatorDrawer : PageIndicatorDrawer() {
@@ -26,7 +27,7 @@ internal class WormAnimPageIndicatorDrawer : PageIndicatorDrawer() {
     }
 
     private fun drawTailConstrictAnim(canvas: Canvas, paint: Paint, itemGap: Int, position: Int, positionOffset: Float, indicator: PageIndicatorView.Indicator) {
-        val animValue = (positionOffset - 0.5f)*2
+        val animValue = (positionOffset - 0.5f) * 2
         val left = indicator.cx - indicator.circleRadius + (((indicator.circleRadius * 2) + itemGap) * animValue)
         val right = indicator.cx - indicator.circleRadius + (indicator.circleRadius * 2) + ((indicator.circleRadius * 2) + itemGap)
         val top = indicator.cy - indicator.circleRadius
@@ -35,4 +36,10 @@ internal class WormAnimPageIndicatorDrawer : PageIndicatorDrawer() {
         canvas.drawRoundRect(rect, indicator.circleRadius, indicator.circleRadius, paint)
     }
 
+
+    class Factory : PageIndicatorDrawerFactory<WormAnimPageIndicatorDrawer> {
+        override fun create(): WormAnimPageIndicatorDrawer {
+            return WormAnimPageIndicatorDrawer()
+        }
+    }
 }

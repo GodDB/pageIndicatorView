@@ -2,6 +2,7 @@ package com.godgod.pageindicator.animator
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import com.godgod.pageindicator.PageIndicatorDrawerFactory
 import com.godgod.pageindicator.PageIndicatorView
 
 internal class FadeAnimPageIndicatorDrawer : PageIndicatorDrawer() {
@@ -36,5 +37,11 @@ internal class FadeAnimPageIndicatorDrawer : PageIndicatorDrawer() {
     private inline fun Paint.useAlpha(alphaValue : Int, block : Paint.() -> Unit) {
         block(this.apply { alpha = alphaValue })
         this.alpha = 255
+    }
+
+    class Factory : PageIndicatorDrawerFactory<FadeAnimPageIndicatorDrawer> {
+        override fun create(): FadeAnimPageIndicatorDrawer {
+            return FadeAnimPageIndicatorDrawer()
+        }
     }
 }
