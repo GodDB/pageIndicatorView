@@ -18,7 +18,7 @@ internal class JumpAnimPageIndicator : PageIndicatorDrawer() {
     private fun drawJumpUpAnim(canvas: Canvas, paint: Paint, itemGap: Int, position: Int, positionOffset: Float, indicator: PageIndicatorView.Indicator) {
         val animValue = positionOffset
         val scaleAnimValue = 1 - (0.8f *positionOffset)
-        val distance = indicator.circleRadius*2 + (itemGap / 2)
+        val distance = indicator.circleRadius*2 + (itemGap)
         val jumpY = -(tan(Math.toRadians(60.0)) * distance).toFloat()
         canvas.drawCircle(indicator.cx + (distance * animValue), indicator.cy + (jumpY * animValue), indicator.circleRadius * scaleAnimValue, paint)
     }
@@ -26,7 +26,7 @@ internal class JumpAnimPageIndicator : PageIndicatorDrawer() {
     private fun drawJumpDownAnim(canvas: Canvas, paint: Paint, itemGap: Int, position: Int, positionOffset: Float, indicator: PageIndicatorView.Indicator) {
         val animValue = positionOffset - 0.5f
         val scaleAnimValue = 0.6f + (0.8f * (positionOffset - 0.5f))
-        val distance = indicator.circleRadius*2 + (itemGap /2)
+        val distance = indicator.circleRadius*2 + (itemGap)
         val prevX = distance * 0.5f
         val prevY = -(tan(Math.toRadians(60.0)) * distance).toFloat() * 0.5f
         val jumpY = -(tan(Math.toRadians(300.0)) * distance).toFloat()
