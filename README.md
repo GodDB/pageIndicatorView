@@ -7,7 +7,7 @@
 ## Dependency 
 
 ```
-implementation("io.github.goddb:pageindicatorview:1.0.0)")
+implementation("io.github.goddb:pageindicatorview:1.0.0")
 ```
 
 ## How to Use
