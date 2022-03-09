@@ -6,6 +6,9 @@
 
 ## Dependency 
 
+You can check the latest version 
+https://search.maven.org/artifact/io.github.goddb/pageindicatorview/1.0.0/aar
+
 ```
 implementation("io.github.goddb:pageindicatorview:1.0.0")
 ```
