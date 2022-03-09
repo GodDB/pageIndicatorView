@@ -12,7 +12,7 @@ implementation("io.github.goddb:pageindicatorview:1.0.0)")
 
 ## How to Use
 
-##### 1. You should do `clipChildren = true` to Parent ViewGroup
+##### 1. You should do `clipChildren = false` to Parent ViewGroup
 
 ``` 
   <androidx.constraintlayout.widget.ConstraintLayout 
