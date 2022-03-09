@@ -40,3 +40,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
+
+ext {
+    PUBLISH_GROUP_ID = 'io.github.goddb'
+    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_ARTIFACT_ID = 'pageindicatorview'
+}
+
+apply from: "${rootProject.projectDir}/publish-module.gradle"

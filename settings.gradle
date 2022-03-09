@@ -8,4 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PageIndicatorView"
 include ':app'
-include ':pageIndicator'
+include ':pageindicatorview'
